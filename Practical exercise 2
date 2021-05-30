@@ -1,0 +1,101 @@
+Задание 1. Навигация по файловой системе
+
+
+gud@gud-VirtualBox:~$ pwd
+/home/gud
+gud@gud-VirtualBox:~$ cd /media/sf_Linux.WorkStation
+gud@gud-VirtualBox:/media/sf_Linux.WorkStation$ cd lesson2/
+gud@gud-VirtualBox:/media/sf_Linux.WorkStation/lesson2$ cd ../../
+gud@gud-VirtualBox:/media$ cd ~
+gud@gud-VirtualBox:~$ cd ..
+gud@gud-VirtualBox:/home$ cd
+gud@gud-VirtualBox:~$ cd Downloads
+
+
+Задание 2. Управление файлами и каталогами и текстовые редакторы
+
+
+gud@gud-VirtualBox:~$ nano file_2.2.1.txt
+gud@gud-VirtualBox:~$ cat file_2.2.1.txt
+Who are you then?
+
+Part of that Power, not understood, which always will the Bad, and always works the Good.
+gud@gud-VirtualBox:~$ vi file_2.2.2.txt
+gud@gud-VirtualBox:~$ cat file_2.2.2.txt
+What I prossess, I see far disstant lying, and what I lost, grows real and undying.
+gud@gud-VirtualBox:~$ echo "A man sees in the world what he carries in his heart." > file_2.2.3.txt
+gud@gud-VirtualBox:~$ cat file_2.2.3.txt
+A man sees in the world what he carries in his heart.
+gud@gud-VirtualBox:~$ echo "As soon as you trust yourself, you will know howto live." >> file_2.2.3.txt
+gud@gud-VirtualBox:~$ cat file_2.2.3.txt
+A man sees in the world what he carries in his heart.
+As soon as you trust yourself, you will know howto live.
+gud@gud-VirtualBox:~$ touch file_2.2.4.txt file_2.2.5.txt
+gud@gud-VirtualBox:~$ nano file_2.2.4.txt
+gud@gud-VirtualBox:~$ cat file_2.2.4.txt
+Whatever you can do or dream you can, begin it.
+Boldness has genius, power and magic in it!
+gud@gud-VirtualBox:~$ vim file_2.2.5.txt 
+gud@gud-VirtualBox:~$ cat file_2.2.5.txt
+You can’t, if you can’t feel it, if it never
+Rises from the soul, and sways
+The heart of every single hearer,
+With deepest power, in simple ways.
+You’ll sit forever, gluing things together,
+Cooking up a stew from other’s scraps,
+Blowing on a miserable fire,
+Made from your heap of dying ash.
+Let apes and children praise your art,
+If their admiration’s to your taste,
+But you’ll never speak from heart to heart,
+Unless it rises up from your heart’s space.
+gud@gud-VirtualBox:~$ ls -l
+total 64
+drwxr-xr-x 2 gud gud 4096 мар  4 08:30  Desktop
+drwxr-xr-x 2 gud gud 4096 апр 10 22:15  Documents
+drwxr-xr-x 2 gud gud 4096 мар  4 08:30  Downloads
+-rw-rw-r-- 1 gud gud  109 мая 31 01:18  file_2.2.1.txt
+-rw-rw-r-- 1 gud gud   84 мая 31 01:24  file_2.2.2.txt
+-rw-rw-r-- 1 gud gud  111 мая 31 01:31  file_2.2.3.txt
+-rw-rw-r-- 1 gud gud   92 мая 31 01:35  file_2.2.4.txt
+-rw-rw-r-- 1 gud gud  470 мая 31 01:39  file_2.2.5.txt
+drwxrwxr-x 2 gud gud 4096 мая 20 20:50 'Linux. Work station'
+drwxr-xr-x 2 gud gud 4096 мар  4 08:30  Music
+-rw-rw-r-- 1 gud gud   39 мар 19 22:27  my.cnf
+drwxr-xr-x 3 gud gud 4096 мая 20 22:15  Pictures
+drwxr-xr-x 2 gud gud 4096 мар  4 08:30  Public
+drwxrwxr-x 2 gud gud 4096 мая 20 20:47  SQL
+drwxr-xr-x 2 gud gud 4096 мар  4 08:30  Templates
+drwxr-xr-x 2 gud gud 4096 мар  4 08:30  Videos
+gud@gud-VirtualBox:~$ mkdir lesson2
+gud@gud-VirtualBox:~$ cd lesson2/
+gud@gud-VirtualBox:~/lesson2$ mkdir /folder1/folder2
+mkdir: cannot create directory ‘/folder1/folder2’: No such file or directory
+gud@gud-VirtualBox:~/lesson2$ mkdir /home/gud/lesson2/folder1/folder2
+mkdir: cannot create directory ‘/home/gud/lesson2/folder1/folder2’: No such file or directory
+gud@gud-VirtualBox:~/lesson2$ ~
+bash: /home/gud: Is a directory
+gud@gud-VirtualBox:~/lesson2$ cd ~
+gud@gud-VirtualBox:~$ mkdir /home/gud/lesson2/folder1/folder2
+mkdir: cannot create directory ‘/home/gud/lesson2/folder1/folder2’: No such file or directory
+gud@gud-VirtualBox:~$ mkdir -p /home/gud/lesson2/folder1/folder2
+gud@gud-VirtualBox:~$ cd lesson2/
+gud@gud-VirtualBox:~/lesson2$ ls -a
+.  ..  folder1
+gud@gud-VirtualBox:~/lesson2$ cd
+gud@gud-VirtualBox:~$ cp /home/gud/file_2.2.1.txt /home/gud/lesson2/
+gud@gud-VirtualBox:~$ cp /home/gud/file_2.2.2.txt /home/gud/lesson2/
+gud@gud-VirtualBox:~$ cp /home/gud/file_2.2.3.txt /home/gud/lesson2/
+gud@gud-VirtualBox:~$ cd lesson2/
+gud@gud-VirtualBox:~/lesson2$ ls -a
+.  ..  file_2.2.1.txt  file_2.2.2.txt  file_2.2.3.txt  folder1
+gud@gud-VirtualBox:~/lesson2$ mv /home/gud/lesson2/file_2.2.1.txt /home/gud/lesson2/folder1/
+gud@gud-VirtualBox:~/lesson2$ mv /home/gud/lesson2/file_2.2.2.txt /home/gud/lesson2/folder1/folder2/
+gud@gud-VirtualBox:~/lesson2$ cd folder1/folder2
+gud@gud-VirtualBox:~/lesson2/folder1/folder2$ ls -a
+.  ..  file_2.2.2.txt
+gud@gud-VirtualBox:~/lesson2/folder1/folder2$ cd ..
+gud@gud-VirtualBox:~/lesson2/folder1$ ls -a
+.  ..  file_2.2.1.txt  folder2
+gud@gud-VirtualBox:~/lesson2$ ls -a
+.  ..  file_2.2.3.txt  folder1
