@@ -1,0 +1,101 @@
+Задание 1. Управление пользователями
+
+a) создать пользователя, используя утилиту useradd
+
+gud@gud-VirtualBox:/etc$ sudo useradd -m -s /bin/bash test_user1
+gud@gud-VirtualBox:/etc$ cat passwd
+(...)
+test_user1:x:1001:1001::/home/test_user1:/bin/bash
+
+gud@gud-VirtualBox:/etc$ sudo adduser second_test_user
+Adding user `second_test_user' ...
+Adding new group `second_test_user' (1001) ...
+Adding new user `second_test_user' (1001) with group `second_test_user' ...
+Creating home directory `/home/second_test_user' ...
+Copying files from `/etc/skel' ...
+New password: 
+Retype new password: 
+passwd: password updated successfully
+Changing the user information for second_test_user
+Enter the new value, or press ENTER for the default
+	Full Name []: Second User       
+	Room Number []: 
+	Work Phone []: 123
+	Home Phone []: 456
+	Other []: manual add
+Is the information correct? [Y/n] y
+gud@gud-VirtualBox:/etc$ id second_test_user
+uid=1001(second_test_user) gid=1001(second_test_user) groups=1001(second_test_user)
+gud@gud-VirtualBox:/etc$ cat passwd
+(...)
+second_test_user:x:1001:1001:Second User,,123,456,manual add:/home/second_test_user:/bin/bash
+
+b) удалить пользователя, используя утилиту userdel
+
+gud@gud-VirtualBox:/etc$ sudo deluser test_user1
+Removing user `test_user1' ...
+Warning: group `test_user1' has no more members.
+Done.
+
+c) создать пользователя в ручном режиме
+
+ud@gud-VirtualBox:/etc$ sudo vim passwd
+gud@gud-VirtualBox:/etc$ id test_user2
+uid=1002(test_user2) gid=1002 groups=1002
+gud@gud-VirtualBox:/etc$ cat passwd
+(...)
+test_user2:x:1002:1002::/home/test_user2:/bin/bash
+
+
+Задание 2. Управление группами
+
+a) создать группу с использованием утилит и в ручном режиме
+
+gud@gud-VirtualBox:/etc$ sudo addgroup test_group
+Adding group `test_group' (GID 1002) ...
+Done.
+
+gud@gud-VirtualBox:/etc$ sudo vim group
+gud@gud-VirtualBox:/etc$ cat group
+(...)
+test_group2:x:1003:
+
+
+b) попрактиковаться в смене групп у пользователей
+
+gud@gud-VirtualBox:/etc$ id test_user1
+uid=1001(test_user1) gid=1001(test_user1) groups=1001(test_user1)
+gud@gud-VirtualBox:/etc$ sudo usermod -g test_group test_user1
+gud@gud-VirtualBox:/etc$ id test_user1
+uid=1001(test_user1) gid=1002(test_group) groups=1002(test_group)
+
+
+c) добавить пользователя в группу, не меняя основной
+
+gud@gud-VirtualBox:/etc$ sudo usermod -aG test_group2 test_user1
+gud@gud-VirtualBox:/etc$ id test_user1
+uid=1001(test_user1) gid=1002(test_group) groups=1002(test_group),1003(test_group2)
+
+d) удалить пользователя из группы
+
+gud@gud-VirtualBox:/etc$ id test_user1
+uid=1001(test_user1) gid=1002(test_group) groups=1002(test_group),1003(test_group2)
+gud@gud-VirtualBox:/etc$ sudo gpasswd -d test_user1 test_group2
+Removing user test_user1 from group test_group2
+gud@gud-VirtualBox:/etc$ id test_user1
+uid=1001(test_user1) gid=1002(test_group) groups=1002(test_group)
+
+
+3. Создать пользователя с правами суперпользователя. Сделать так, чтобы sudo не требовал пароль для выполнения команд.
+
+gud@gud-VirtualBox:/etc$ sudo useradd -o -u 0 -g 0 -s /bin/bash super_user
+gud@gud-VirtualBox:/etc$ id super_user
+uid=0(root) gid=0(root) groups=0(root)
+
+gud@gud-VirtualBox:/etc$ sudo passwd super_user
+New password: 
+Retype new password: 
+passwd: password updated successfully
+gud@gud-VirtualBox:/etc$ su super_user
+Password: 
+root@gud-VirtualBox:/etc# 
