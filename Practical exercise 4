@@ -1,0 +1,105 @@
+Задание 1. Потоки ввода/вывода
+
+1.1 Создать файл, используя команду echo
+
+gud@gud-VirtualBox:/media/sf_Linux.WorkStation/lesson4$ echo "I am not oniscient, but I know a lot." > first_task.txt
+gud@gud-VirtualBox:/media/sf_Linux.WorkStation/lesson4$ cat first_task.txt
+I am not oniscient, but I know a lot.
+
+1.2 Используя команду cat, прочитать содержимое каталога etc, ошибки перенаправить в отдельный файл.
+
+gud@gud-VirtualBox:/media/sf_Linux.WorkStation/lesson4$ cat /etc/* 2> first_task_etc_err.txt
+
+Задание 2. Конвейер (pipeline)
+# выполнялось задание изначально в каталоге /etc/*, каталог /etc/grub.d приведен для примера (за меньшим объемом данных для вывлда результатов)
+
+2.1 Использовать команду cut на вывод длинного списка каталога, чтобы отобразить только права доступа к файлам.
+gud@gud-VirtualBox:/media/sf_Linux.WorkStation/lesson4$ ls -l /etc/grub.d | cut -f1 -d " "
+total
+-rwxr-xr-x
+-rwxr-xr-x
+-rwxr-xr-x
+-rwxr-xr-x
+-rwxr-xr-x
+-rwxr-xr-x
+-rwxr-xr-x
+-rwxr-xr-x
+-rwxr-xr-x
+-rwxr-xr-x
+-rw-r--r--
+
+2.2 Отправить в конвейере вывод 2.1 на sort и uniq, чтобы отфильтровать все повторяющиеся строки.
+gud@gud-VirtualBox:/media/sf_Linux.WorkStation/lesson4$ ls -l /etc/grub.d | cut -f1 -d " " |sort | uniq
+-rw-r--r--
+-rwxr-xr-x
+total
+
+Задание 3. Управление процессами
+
+3.1 Изменить конфигурационный файл службы SSH: /etc/ssh/sshd_config, отключив аутентификацию по паролю PasswordAuthentication no (+ screen 3.1.png)
+gud@gud-VirtualBox:~$ sudo vim /etc/ssh/sshd_config
+
+3.2 Выполните рестарт службы systemctl restart sshd (service sshd restart)
+gud@gud-VirtualBox:~$ systemctl restart sshd
+
+3.3 Верните аутентификацию по паролю, выполните reload службы systemctl reload sshd (services sshd reload)
+gud@gud-VirtualBox:~$ sudo vim /etc/ssh/sshd_config
+gud@gud-VirtualBox:~$ systemctl reload sshd
+
+3.4 В чём различие между действиями restart и reload?
+restart останавливает службу и заново запускает, в то время как reload отправляет команду службе на перечитывание файлов конфигурации без остановки работы службы.
+
+3.5 Создайте файл при помощи команды cat > file_name, напишите текст и завершите комбинацией ctrl+d
+gud@gud-VirtualBox:/media/sf_Linux.WorkStation/lesson4$ cat > task_3
+line 1  
+line 2
+line 3
+gud@gud-VirtualBox:/media/sf_Linux.WorkStation/lesson4$ cat task_3
+line 1
+line 2
+line 3
+
+3.6 Какой сигнал передадим процессу (выполненному в 3.5)?
+По сути - регистрация "EOF" (т.е. окончание потока ввода)
+
+Задание 4. Сигналы процессам
+
+4.1 Запустите mc
+gud@gud-VirtualBox:~$ ps mc
+
+4.2 Используя ps, найдите PID процесса
+gud@gud-VirtualBox:~$ ps mc
+    PID TTY      STAT   TIME COMMAND
+   1041 tty2     -      0:00 gdm-x-session
+      - -        Ssl+   0:00 -
+      - -        Ssl+   0:00 -
+      - -        Ssl+   0:00 -
+   1043 tty2     -      1:00 Xorg
+      - -        Sl+    0:54 -
+      - -        SNl+   0:00 -
+      - -        SNl+   0:00 -
+      - -        SNl+   0:00 -
+      - -        SNl+   0:00 -
+      - -        Sl+    0:05 -
+   1129 tty2     -      0:00 gnome-session-b
+      - -        Sl+    0:00 -
+      - -        Sl+    0:00 -
+      - -        Sl+    0:00 -
+   2398 pts/0    -      0:00 bash
+      - -        Ss     0:00 -
+   2404 pts/0    -      0:00 mc
+      - -        S+     0:00 -
+   2406 pts/1    -      0:00 bash
+      - -        Ss+    0:00 -
+   2447 pts/2    -      0:00 bash
+      - -        Ss     0:00 -
+   2453 pts/2    -      0:00 ps
+      - -        R+     0:00 -
+gud@gud-VirtualBox:~$ pidof mc
+2404
+gud@gud-VirtualBox:~$ ps axu | grep mc
+gud         2404  0.0  0.4  30728  9392 pts/0    S+   17:13   0:00 mc
+gud         2475  0.0  0.0  17672   724 pts/2    S+   17:15   0:00 grep --color=auto mc
+
+4.3 Завершите процесс, передав ему сигнал 9 (+ screen 4.3.png)
+gud@gud-VirtualBox:~$ kill -9 2404
