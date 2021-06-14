@@ -1,0 +1,82 @@
+Задание 1.
+Удаление из текстового файла пустые строки, замена маленьких символов на большие. 
+1.1 Создание текстового файла для проверок
+gud@gud-VirtualBox:/media/sf_Linux.WorkStation/lesson6$ vim file61.txt
+gud@gud-VirtualBox:/media/sf_Linux.WorkStation/lesson6$ cat file61.txt
+Line 1
+
+liNe 3
+
+
+line 6
+lIne 7
+
+linE 9
+
+gud@gud-VirtualBox:/media/sf_Linux.WorkStation/lesson6$ sed 's/[A-Z]/\L&/g' file61.txt
+line 1
+
+line 3
+
+
+line 6
+line 7
+
+line 9
+gud@gud-VirtualBox:/media/sf_Linux.WorkStation/lesson6$ sed '/^$/d' file61.txt
+
+line 1
+line 3
+line 6
+line 7
+line 9
+
+gud@gud-VirtualBox:/media/sf_Linux.WorkStation/lesson6$ tr -s '\n' < file61.txt 
+gud@gud-VirtualBox:/media/sf_Linux.WorkStation/lesson6$ tr '[:upper:]' '[:lower:]' < file61.txt 
+
+Задание 2. 
+Создать однострочный скрипт, который создаст директории для нескольких годов (2010–2017), в них — поддиректории для месяцев (от 01 до 12), и в каждый из них запишет несколько файлов с произвольными записями. Например, 001.txt, содержащий текст «Файл 001», 002.txt с текстом «Файл 002» и т. д.
+
+gud@gud-VirtualBox:/media/sf_Linux.WorkStation/lesson6$ cat > file62.sh
+#!/bin/bash
+for fn in ./ex2/{2010..2017}/{01..12}/{001..010}; do     
+mkdir -p "$(dirname $fn)" && echo "File $(echo $fn | cut -d '/' -f 5)" > "$fn.txt"
+done
+gud@gud-VirtualBox:/media/sf_Linux.WorkStation/lesson6$ ./file62.sh
+
+
+Задание 3. 
+Использовать команду AWK на вывод длинного списка каталога, чтобы отобразить только права доступа к файлам. Затем отправить в конвейере этот вывод на sort и uniq, чтобы отфильтровать все повторяющиеся строки.
+
+gud@gud-VirtualBox:~$ ls -la | awk '{print $1}' |sort |uniq
+drwx------
+drwxrwxr-x
+drwxr-xr-x
+lrwxrwxrwx
+-rw-------
+-rw-r-----
+-rw-r--r--
+-rw-rw-r--
+total
+
+
+Задание 4. 
+Используя grep, проанализировать файл /var/log/syslog, отобрав события на своё усмотрение.
+
+gud@gud-VirtualBox:~$ grep -i -n '<info>' /var/log/syslog
+
+gud@gud-VirtualBox:~$ grep -i -c 'keycode [a-z]' /var/log/syslog
+
+
+Задание 5.
+Создать разовое задание на перезагрузку операционной системы, используя at.
+
+gud@gud-VirtualBox:~$ echo "gud/sbin/reboot -r -now"| at 03:30 PM today
+warning: commands will be executed using /bin/sh
+job 1 at Mon Jun 14 15:30:00 2021
+gud@gud-VirtualBox:~$ at -f /sbin/reboot 15:45 06/14/2021
+warning: commands will be executed using /bin/sh
+job 2 at Mon Jun 14 15:45:00 2021
+gud@gud-VirtualBox:~$ atq
+2	Mon Jun 14 15:45:00 2021 a gud
+1	Mon Jun 14 15:30:00 2021 a gud
