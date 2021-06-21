@@ -1,0 +1,47 @@
+Задание 1. 
+1.1 подключить репозиторий с nginx любым удобным способом
+
+gud@gud-VirtualBox:/etc/apt/sources.list.d$ curl -fsSL https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
+OK
+gud@gud-VirtualBox:/etc/apt/sources.list.d$ sudo apt update
+(...)
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+97 packages can be upgraded. Run 'apt list --upgradable' to see them.
+
+1.2 установить nginx
+
+gud@gud-VirtualBox:/etc/apt/sources.list.d$ sudo apt install nginx
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+(...)
+
+1.3 удалить nginx, используя утилиту dpkg
+
+gud@gud-VirtualBox:/etc/apt/sources.list.d$ sudo dpkg -r nginx
+(Reading database ... 192798 files and directories currently installed.)
+Removing nginx (1.18.0-0ubuntu1.2) ...
+
+Задание 2.
+Установить пакет на свой выбор, используя snap.
+
+gud@gud-VirtualBox:/etc/apt$ sudo snap install pycharm-community --classic
+
+
+Задание  3.
+Настроить iptables: разрешить подключения только на 22-й и 80-й порты.
+
+gud@gud-VirtualBox:~$ sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+gud@gud-VirtualBox:~$ sudo iptables -A OUTPUT -p tcp -m tcp --sport 22 -j ACCEPT
+gud@gud-VirtualBox:~$ sudo iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+gud@gud-VirtualBox:~$ sudo iptables -A OUTPUT -p tcp -m tcp --sport 80 -j ACCEPT
+gud@gud-VirtualBox:~$ sudo iptables -S
+-P INPUT ACCEPT
+-P FORWARD ACCEPT
+-P OUTPUT ACCEPT
+-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp --sport 22 -j ACCEPT
+-A OUTPUT -p tcp -m tcp --sport 80 -j ACCEPT
