@@ -1,0 +1,44 @@
+gud@gud-VirtualBox:~$ sudo usermod -aG docker gud
+gud@gud-VirtualBox:~$ su - gud
+Password: 
+gud@gud-VirtualBox:~$ docker search ubuntu
+NAME                                                      DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+ubuntu                                                    Ubuntu is a Debian-based Linux operating sys…   12441     [OK]       
+dorowu/ubuntu-desktop-lxde-vnc                            Docker image to provide HTML5 VNC interface …   544                  [OK]
+websphere-liberty                                         WebSphere Liberty multi-architecture images …   274       [OK]       
+rastasheep/ubuntu-sshd                                    Dockerized SSH service, built on top of offi…   253                  [OK]
+consol/ubuntu-xfce-vnc                                    Ubuntu container with "headless" VNC session…   241                  [OK]
+ubuntu-upstart                                            Upstart is an event-based replacement for th…   110       [OK]       
+1and1internet/ubuntu-16-nginx-php-phpmyadmin-mysql-5      ubuntu-16-nginx-php-phpmyadmin-mysql-5          50                   [OK]
+open-liberty                                              Open Liberty multi-architecture images based…   46        [OK]       
+ubuntu-debootstrap                                        debootstrap --variant=minbase --components=m…   44        [OK]       
+i386/ubuntu                                               Ubuntu is a Debian-based Linux operating sys…   25                   
+solita/ubuntu-systemd                                     Ubuntu + systemd                                24                   [OK]
+nuagebec/ubuntu                                           Simple always updated Ubuntu docker images w…   24                   [OK]
+1and1internet/ubuntu-16-apache-php-5.6                    ubuntu-16-apache-php-5.6                        14                   [OK]
+1and1internet/ubuntu-16-apache-php-7.0                    ubuntu-16-apache-php-7.0                        13                   [OK]
+1and1internet/ubuntu-16-nginx-php-phpmyadmin-mariadb-10   ubuntu-16-nginx-php-phpmyadmin-mariadb-10       11                   [OK]
+1and1internet/ubuntu-16-nginx-php-5.6-wordpress-4         ubuntu-16-nginx-php-5.6-wordpress-4             9                    [OK]
+1and1internet/ubuntu-16-nginx-php-5.6                     ubuntu-16-nginx-php-5.6                         8                    [OK]
+1and1internet/ubuntu-16-apache-php-7.1                    ubuntu-16-apache-php-7.1                        7                    [OK]
+pivotaldata/ubuntu                                        A quick freshening-up of the base Ubuntu doc…   4                    
+1and1internet/ubuntu-16-nginx-php-7.0                     ubuntu-16-nginx-php-7.0                         4                    [OK]
+owncloud/ubuntu                                           ownCloud Ubuntu base image                      3                    
+1and1internet/ubuntu-16-nginx-php-7.1-wordpress-4         ubuntu-16-nginx-php-7.1-wordpress-4             3                    [OK]
+pivotaldata/ubuntu-gpdb-dev                               Ubuntu images for GPDB development              1                    
+smartentry/ubuntu                                         ubuntu with smartentry                          1                    [OK]
+pivotaldata/ubuntu16.04-test                              Ubuntu 16.04 image for GPDB testing             0                    
+gud@gud-VirtualBox:~$ docker pull ubuntu
+Using default tag: latest
+latest: Pulling from library/ubuntu
+c549ccf8d472: Pull complete 
+Digest: sha256:aba80b77e27148d99c034a987e7da3a287ed455390352663418c0f2ed40417fe
+Status: Downloaded newer image for ubuntu:latest
+docker.io/library/ubuntu:latest
+gud@gud-VirtualBox:~$ docker run --name ubuntu_test ubuntu
+gud@gud-VirtualBox:~$ docker container ps -a
+CONTAINER ID   IMAGE         COMMAND    CREATED          STATUS                      PORTS     NAMES
+9842b9a522d5   ubuntu        "bash"     5 seconds ago    Exited (0) 4 seconds ago              ubuntu_test
+4b46303fc5e3   ubuntu        "bash"     6 minutes ago    Exited (0) 6 minutes ago              eager_hofstadter
+fbbd34ea7f0e   ubuntu        "bash"     14 minutes ago   Exited (0) 14 minutes ago             vigilant_neumann
+f0da1b44422d   hello-world   "/hello"   31 minutes ago   Exited (0) 31 minutes ago             serene_swirles
